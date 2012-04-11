@@ -53,9 +53,10 @@ class Map:
     :param string filename: Input filename
     '''
 
-    def __init__(self, order=6, filename='fort.18'): 
+    def __init__(self, order=6, filename='fort.18', gaussianDelta=False): 
         ietall=0
         self.order=order
+        self.gaussianDelta = gaussianDelta
         xyzd=['x', 'px', 'y', 'py', 'd','s' ]
         strord=str(order+1)
         for line in open(filename):
@@ -154,10 +155,10 @@ class Map:
             mm=coeff1[4] 
             nn=coeff1[5]
             if ((jj/2==jj/2.) & (kk/2==kk/2.) & (ll/2==ll/2.) & (mm/2==mm/2.) & (nn/2==nn/2.)):
-                sigmaprod=pow(i[0], jj)*pow(i[1], kk)*pow(i[2], ll)*pow(i[3], mm)*pow(i[4]/2., nn)
-                if (sigmaprod >0):
-                    Gammasumln=gammln(0.5+jj/2.)+gammln(0.5+kk/2.)+gammln(0.5+ll/2.)+gammln(0.5+mm/2.)
-                    factor=pow(2, (jj+kk+ll+mm)/2.)/pow(pi, 2.)/(nn+1)
+                sigmaprod = self.__sigma(jj,kk,ll,mm,nn,i)
+                if (sigmaprod > 0):
+                    Gammasumln = self.__gamma(jj,kk,ll,mm,nn)
+                    factor = self.__factor(jj,kk,ll,mm,nn)
                     sx += coeff1[0]*factor*exp(Gammasumln)*sigmaprod  
         return sx
 
@@ -183,10 +184,10 @@ class Map:
                     mm=coeff1[4] + coeff2[4]
                     nn=coeff1[5] + coeff2[5]
                     if ((jj/2==jj/2.) & (kk/2==kk/2.) & (ll/2==ll/2.) & (mm/2==mm/2.) & (nn/2==nn/2.)):
-                        sigmaprod=pow(i[0], jj)*pow(i[1], kk)*pow(i[2], ll)*pow(i[3], mm)*pow(i[4]/2., nn)
+                        sigmaprod = self.__sigma(jj,kk,ll,mm,nn,i)
                         if (sigmaprod >0):
-                            Gammasumln=gammln(0.5+jj/2.)+gammln(0.5+kk/2.)+gammln(0.5+ll/2.)+gammln(0.5+mm/2.)
-                            factor= countfactor*pow(2, (jj+kk+ll+mm)/2.)/pow(pi, 2.)/(nn+1)
+                            Gammasumln = self.__gamma(jj,kk,ll,mm,nn)
+                            factor = countfactor*self.__factor(jj,kk,ll,mm,nn)
                             sxt = coeff1[0]*coeff2[0]*factor*exp(Gammasumln)*sigmaprod   
                             #print jj,kk,ll,mm,nn,":",coeff1[1],coeff1[2],coeff1[3],coeff1[4],coeff1[5], ":" ,sxt
                             sx2 += sxt             
@@ -205,15 +206,43 @@ class Map:
                 ll=coeff1[3] + coeff2[3]
                 mm=coeff1[4] + coeff2[4]
                 nn=coeff1[5] + coeff2[5]
-                if (1==1):
-                    countfactor=1.0
+
+                countfactor=1.0
+                
+                if ((jj/2==jj/2.) & (kk/2==kk/2.) & (ll/2==ll/2.) & (mm/2==mm/2.) & (nn/2==nn/2.)):
+                    sigmaprod = self.__sigma(jj,kk,ll,mm,nn,i)
+                    if (sigmaprod > 0):
+                        Gammasumln = self.__gamma(jj,kk,ll,mm,nn)
+                        factor = countfactor*self.__factor(jj,kk,ll,mm,nn)
+                        sxt = coeff1[0]*coeff2[0]*factor*exp(Gammasumln)*sigmaprod   
+                        #print jj,kk,ll,mm,nn,":",coeff1[1],coeff1[2],coeff1[3],coeff1[4],coeff1[5], ":" ,sxt
+                        sx2 += sxt             
+        return sx2
+
+
+    #Correlation from mapclass.GaussianDelta.py
+    def correlation3(self, x1, x2, x3, i):
+        sx2=0
+        exec 'mapxory1=self.'+x1
+        exec 'mapxory2=self.'+x2
+        exec 'mapxory3=self.'+x3
+        for coeff1 in mapxory1:
+            for coeff2 in mapxory2:
+              for coeff3 in mapxory3:
+                jj=coeff1[1] + coeff2[1] + coeff3[1]
+                kk=coeff1[2] + coeff2[2] + coeff3[2]
+                ll=coeff1[3] + coeff2[3] + coeff3[3]
+                mm=coeff1[4] + coeff2[4] + coeff3[4]
+                nn=coeff1[5] + coeff2[5] + coeff3[5]
+                
+                countfactor=1.0
                     
-                    if ((jj/2==jj/2.) & (kk/2==kk/2.) & (ll/2==ll/2.) & (mm/2==mm/2.) & (nn/2==nn/2.)):
-                        sigmaprod=pow(i[0], jj)*pow(i[1], kk)*pow(i[2], ll)*pow(i[3], mm)*pow(i[4], nn)
-                        if (sigmaprod >0):
-                            Gammasumln=gammln(0.5+jj/2.)+gammln(0.5+kk/2.)+gammln(0.5+ll/2.)+gammln(0.5+mm/2.)+gammln(0.5+nn/2.)
-                            factor= countfactor*pow(2, (jj+kk+ll+mm+nn)/2.)/pow(pi, 2.5)
-                            sxt = coeff1[0]*coeff2[0]*factor*exp(Gammasumln)*sigmaprod   
+                if ((jj/2==jj/2.) & (kk/2==kk/2.) & (ll/2==ll/2.) & (mm/2==mm/2.) & (nn/2==nn/2.)):
+                        sigmaprod = self.__sigma(jj,kk,ll,mm,nn,i)
+                        if (sigmaprod > 0):
+                            Gammasumln = self.__gamma(jj,kk,ll,mm,nn)
+                            factor = countfactor*self.__factor(jj,kk,ll,mm,nn)
+                            sxt = coeff1[0]*coeff2[0]*coeff3[0]*factor*exp(Gammasumln)*sigmaprod   
                             #print jj,kk,ll,mm,nn,":",coeff1[1],coeff1[2],coeff1[3],coeff1[4],coeff1[5], ":" ,sxt
                             sx2 += sxt             
         return sx2
@@ -235,16 +264,37 @@ class Map:
                     mm=coeff1[4] + coeff2[4]
                     nn=coeff1[5] + coeff2[5]
                     if ((jj/2==jj/2.) & (kk/2==kk/2.) & (ll/2==ll/2.) & (mm/2==mm/2.) & (nn/2==nn/2.)):
-                        sigmaprod=pow(i[0], jj)*pow(i[1], kk)*pow(i[2], ll)*pow(i[3], mm)*pow(i[4]/2., nn)
+                        sigmaprod = self.__sigma(jj,kk,ll,mm,nn,i)
                         if (sigmaprod >0):
-                            Gammasumln=gammln(0.5+jj/2.)+gammln(0.5+kk/2.)+gammln(0.5+ll/2.)+gammln(0.5+mm/2.)
-                            factor=countfactor*pow(2, (jj+kk+ll+mm)/2.)/pow(pi, 2.)/(nn+1)
+                            Gammasumln = self.__gamma(jj,kk,ll,mm,nn)
+                            factor = countfactor*self.__factor(jj,kk,ll,mm,nn)
                             sxt = coeff1[0]*coeff2[0]*factor*exp(Gammasumln)*sigmaprod
-                            elist=[-abs(sxt),sxt,coeff1[1], coeff1[2],coeff1[3],coeff1[4], coeff1[5], coeff2[1], coeff2[2],coeff2[3],coeff2[4], coeff2[5]]
+                            elist = [-abs(sxt),sxt,coeff1[1], coeff1[2],coeff1[3],coeff1[4], coeff1[5], coeff2[1], coeff2[2],coeff2[3],coeff2[4], coeff2[5]]
                             exec "self.list"+xory+".append(elist)"
         exec "self.list"+xory+".sort()"
-        return
 
+    #Auxiliary functions (private)
+    def __sigma(self, jj, kk, ll, mm, nn, i):
+        if (self.gaussianDelta):
+            sigmaprod = pow(i[0], jj)*pow(i[1], kk)*pow(i[2], ll)*pow(i[3], mm)*pow(i[4], nn)
+        else:
+            sigmaprod = pow(i[0], jj)*pow(i[1], kk)*pow(i[2], ll)*pow(i[3], mm)*pow(i[4]/2., nn)
+        return sigmaprod
+
+
+    def __gamma(self, jj, kk, ll, mm, nn):
+        if (self.gaussianDelta):
+            Gammasumln = gammln(0.5+jj/2.)+gammln(0.5+kk/2.)+gammln(0.5+ll/2.)+gammln(0.5+mm/2.)+gammln(0.5+nn/2.)
+        else:
+            Gammasumln = gammln(0.5+jj/2.)+gammln(0.5+kk/2.)+gammln(0.5+ll/2.)+gammln(0.5+mm/2.)
+        return Gammasumln
+
+    def __factor(self, jj, kk, ll, mm, nn):
+        if (self.gaussianDelta):
+               factor = pow(2, (jj+kk+ll+mm+nn)/2.)/pow(pi, 2.5)
+        else:
+               factor = pow(2, (jj+kk+ll+mm)/2.)/pow(pi, 2.)/(nn+1)
+        return factor
 
 ############################################
 #### some examples of usage #####################
