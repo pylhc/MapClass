@@ -51,6 +51,7 @@ class Map:
 
     :param int order: Calculate map up to this order
     :param string filename: Input filename
+    :param boolean gaussianDelta: Use gaussianDelta or not
     '''
 
     def __init__(self, order=6, filename='fort.18', gaussianDelta=False): 
