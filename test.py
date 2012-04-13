@@ -38,7 +38,7 @@ map.generatelist('py',sigmaFFS)
 print "------------------------------"
 print "@comp fort.18, 5fort.18"
 map2=Map(args.order,'5fort.18')
-map.comp(map2)
+print map.comp(map2)
 
 print "\n\n########## GaussianDelta ##########"
 
@@ -62,4 +62,4 @@ map.generatelist('py',sigmaFFS)
 print "------------------------------"
 print "@comp fort.18, 5fort.18"
 map2=Map(args.order,'5fort.18',True)
-map.comp(map2)
+print map.comp(map2)

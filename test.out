@@ -1,0 +1,31 @@
+Initialized map with # of coefficients in x,px,y,py: 245 245 216 216
+sigmax= 4.01807668974e-08 ;
+sigmay= 1.04915328234e-09 ;
+sigmapx= 7.17495203774e-06 ;
+sigmapy= 9.84377306746e-06 ;
+--------------------------------
+generatelistx
+generatelisty
+generatelistpx
+generatelistpy
+------------------------------
+@comp fort.18, 5fort.18
+Initialized map with # of coefficients in x,px,y,py: 135 135 116 116
+5.22280969476e+62
+
+
+########## GaussianDelta ##########
+Initialized map with # of coefficients in x,px,y,py: 245 245 216 216
+sigmax= 2.67626191916e-07 ;
+sigmay= 3.48506006946e-08 ;
+sigmapx= 1.7912217402e-05 ;
+sigmapy= 1.25421322316e-05 ;
+--------------------------------
+generatelistx
+generatelisty
+generatelistpx
+generatelistpy
+------------------------------
+@comp fort.18, 5fort.18
+Initialized map with # of coefficients in x,px,y,py: 135 135 116 116
+5.22280969476e+62
