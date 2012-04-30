@@ -23,22 +23,26 @@ print "sigmax=",sqrt(map.sigma('x',sigmaFFS)),";"
 print "sigmay=",sqrt(map.sigma('y',sigmaFFS)),";"
 print "sigmapx=",sqrt(map.sigma('px',sigmaFFS)),";"
 print "sigmapy=",sqrt(map.sigma('py',sigmaFFS)),";"
+print "offsetx=",map.offset('x',sigmaFFS),";"
+print "offsety=",map.offset('y',sigmaFFS),";"
+print "offsetpx=",map.offset('px',sigmaFFS),";"
+print "offsetpy=",map.offset('py',sigmaFFS),";"
 
-print "--------------------------------"
+# print "--------------------------------"
 
-print "generatelistx"
-map.generatelist('x',sigmaFFS)
-print "generatelisty"
-map.generatelist('y',sigmaFFS)
-print "generatelistpx"
-map.generatelist('px',sigmaFFS)
-print "generatelistpy"
-map.generatelist('py',sigmaFFS)
+# print "generatelistx"
+# map.generatelist('x',sigmaFFS)
+# print "generatelisty"
+# map.generatelist('y',sigmaFFS)
+# print "generatelistpx"
+# map.generatelist('px',sigmaFFS)
+# print "generatelistpy"
+# map.generatelist('py',sigmaFFS)
 
-print "------------------------------"
-print "@comp fort.18, 5fort.18"
-map2=Map(args.order,'5fort.18')
-print map.comp(map2)
+# print "------------------------------"
+# print "@comp fort.18, 5fort.18"
+# map2=Map(args.order,'5fort.18')
+# print map.comp(map2)
 
 print "\n\n########## GaussianDelta ##########"
 
@@ -47,19 +51,23 @@ print "sigmax=",sqrt(map.sigma('x',sigmaFFS)),";"
 print "sigmay=",sqrt(map.sigma('y',sigmaFFS)),";"
 print "sigmapx=",sqrt(map.sigma('px',sigmaFFS)),";"
 print "sigmapy=",sqrt(map.sigma('py',sigmaFFS)),";"
+print "offsetx=",map.offset('x',sigmaFFS),";"
+print "offsety=",map.offset('y',sigmaFFS),";"
+print "offsetpx=",map.offset('px',sigmaFFS),";"
+print "offsetpy=",map.offset('py',sigmaFFS),";"
 
-print "--------------------------------"
+# print "--------------------------------"
 
-print "generatelistx"
-map.generatelist('x',sigmaFFS)
-print "generatelisty"
-map.generatelist('y',sigmaFFS)
-print "generatelistpx"
-map.generatelist('px',sigmaFFS)
-print "generatelistpy"
-map.generatelist('py',sigmaFFS)
+# print "generatelistx"
+# map.generatelist('x',sigmaFFS)
+# print "generatelisty"
+# map.generatelist('y',sigmaFFS)
+# print "generatelistpx"
+# map.generatelist('px',sigmaFFS)
+# print "generatelistpy"
+# map.generatelist('py',sigmaFFS)
 
-print "------------------------------"
-print "@comp fort.18, 5fort.18"
-map2=Map(args.order,'5fort.18',True)
-print map.comp(map2)
+# print "------------------------------"
+# print "@comp fort.18, 5fort.18"
+# map2=Map(args.order,'5fort.18',True)
+# print map.comp(map2)
