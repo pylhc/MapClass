@@ -8,10 +8,10 @@
 #
 #!/usr/bin/env python
 
-from Numeric import *
+#from Numeric import *
 from math import *
 from string import split
-from LinearAlgebra import *
+#from LinearAlgebra import *
 import sys
 
 
